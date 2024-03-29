@@ -36,3 +36,24 @@ Output: 4
 Explanation: The longest possible good subarray is [5,5,5,5] since the value 5 occurs 4 times in this subarray.
 It can be shown that there are no good subarrays with length more than 4.
 '''
+class Solution(object):
+    def maxSubarrayLength(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        start = 0
+        dic = defaultdict(int)
+        max_len = 0
+
+        for end in range(len(nums)):
+            dic[nums[end]] += 1
+
+            while dic[nums[end]] > k:
+                dic[nums[start]] -= 1
+                start += 1
+
+            max_len = max_len if max_len >= end - start + 1 else end - start + 1
+
+        return (max_len)
